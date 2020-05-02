@@ -1,4 +1,14 @@
-# Usage
+# About
+
+Allows to auto install conan deps during cmake configure step.
+
+Useful if you want to use IDE that auto-creates build and configure directories (like QT).
+
+See QT instructions https://doc.qt.io/qtcreator/creator-build-settings.html#cmake-build-configuration
+
+If you have really big deps like llvm - Prefer to install big deps (`conan install` in terminal) without IDE integration manually and always with same build settings (otherwise IDE may hang for long time without proper logging during llvm build!)
+
+## Usage
 
 Usage with `FetchContent` to auto-download and `include` file:
 
@@ -64,4 +74,6 @@ if (CONAN_AUTO_INSTALL)
   )
 endif()
 ```
+
+Note what you can change `CONAN_AUTO_INSTALL=ON`
 
