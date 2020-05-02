@@ -77,3 +77,25 @@ endif()
 
 Note what you can change `CONAN_AUTO_INSTALL=ON`
 
+## What to do after `conan_auto_install`?
+
+After `conan_auto_install` you can use `conan_basic_setup` as usual:
+
+```cmake
+if(EXISTS "${CMAKE_CURRENT_BINARY_DIR}/conanbuildinfo.cmake")
+  list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_BINARY_DIR}/)
+  include(${CMAKE_CURRENT_BINARY_DIR}/conanbuildinfo.cmake)
+  include(${CMAKE_CURRENT_BINARY_DIR}/conan_paths.cmake OPTIONAL)
+  conan_basic_setup(
+    # prevent conan_basic_setup from resetting cmake variables
+    TARGETS
+    # NO_OUTPUT_DIRS to allow custom RUNTIME_OUTPUT_DIRECTORY
+    # see https://github.com/conan-io/conan/issues/6012
+    NO_OUTPUT_DIRS
+  )
+else()
+  message (WARNING "${CMAKE_CURRENT_BINARY_DIR}/conanbuildinfo.cmake not found!")
+  message (FATAL_ERROR "must use conan")
+endif()
+```
+
